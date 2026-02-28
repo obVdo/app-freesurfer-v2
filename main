@@ -19,14 +19,4 @@ else
     exit 1
 fi
 
-# Pull image with retry (Docker Hub can drop connection on first attempt)
-export SINGULARITY_CACHEDIR=${TMPDIR:-/tmp}/singularity_cache
-mkdir -p $SINGULARITY_CACHEDIR
-
-for i in 1 2 3; do
-    singularity pull --force $SINGULARITY_CACHEDIR/freesurfer.sif docker://brainlife/freesurfer:7.1.1 && break
-    echo "Pull attempt $i failed, retrying in 30s..."
-    sleep 30
-done
-
-time singularity exec -e -B `pwd`/license.txt:/usr/local/freesurfer/license.txt $SINGULARITY_CACHEDIR/freesurfer.sif ./freesurfer.sh
+time singularity exec -e -B `pwd`/license.txt:/usr/local/freesurfer/license.txt docker://brainlife/freesurfer:7.1.1 ./freesurfer.sh
