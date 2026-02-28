@@ -3,8 +3,5 @@ product.json
 license.txt
 output/
 freesurfer/
-parc/
-parc2009/
-parcDKT/
 qa/
 expert.opts
