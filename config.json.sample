@@ -1,12 +1,3 @@
 {
-    "t1": "testdata/t1/t1.nii.gz",
-    "t2": "",
-    "hippocampal": false,
-    "thalamicnuclei": false,
-    "hires": false,
-    "notalcheck": true,
-    "cw256": false,
-    "debug": false,
-    "localGI": false,
-    "expert": null
+    "t1": "testdata/t1/t1.nii.gz"
 }
