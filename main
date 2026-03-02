@@ -9,18 +9,10 @@
 set -e
 set -x
 
-# Support both FREESURFER_LICENSE (content string) and FS_LICENSE (path to file)
-if [ -n "$FREESURFER_LICENSE" ]; then
-    echo $FREESURFER_LICENSE > license.txt
-elif [ -n "$FS_LICENSE" ] && [ -f "$FS_LICENSE" ]; then
-    cp "$FS_LICENSE" license.txt
-else
-    echo "Please set FREESURFER_LICENSE (content) or FS_LICENSE (path) in resource environment"
-    exit 1
-fi
+[ -z "$FREESURFER_LICENSE" ] && echo "Please set FREESURFER_LICENSE in resource environment" && exit 1
+echo $FREESURFER_LICENSE > license.txt
 
-singularity --version
-which singularity
-
-# TEST: check if Docker Hub pulls work on ICM SLURM (hello-world is ~1KB)
-singularity exec docker://hello-world /hello
+time singularity exec -e \
+  -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
+  docker://aunnikri642/app-freesurfer-mne-source-recon \
+  bash -c "mkdir -p /usr/local/mni/bin && printf '#!/bin/bash\ntalairach_avi \"\$@\"\n' > /usr/local/mni/bin/mritotal && chmod +x /usr/local/mni/bin/mritotal && export MINC_BIN_DIR=/usr/local/mni/bin && bash ./freesurfer.sh"
