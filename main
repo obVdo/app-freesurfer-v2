@@ -22,8 +22,5 @@ fi
 singularity --version
 which singularity
 
-# FreeSurfer 7.4.1 needs MINC mritotal for Talairach - shim it with talairach_avi (built-in)
-time singularity exec \
-  -B `pwd`/license.txt:/opt/freesurfer/license.txt \
-  docker://aunnikri642/app-freesurfer-mne-source-recon \
-  bash -c "mkdir -p /usr/local/mni/bin && printf '#!/bin/bash\ntalairach_avi \"\$@\"\n' > /usr/local/mni/bin/mritotal && chmod +x /usr/local/mni/bin/mritotal && export MINC_BIN_DIR=/usr/local/mni/bin && bash ./freesurfer.sh"
+# TEST: check if Docker Hub pulls work on ICM SLURM (hello-world is ~1KB)
+singularity exec docker://hello-world /hello
