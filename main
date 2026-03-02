@@ -22,11 +22,8 @@ fi
 singularity --version
 which singularity
 
-# Pull to local SIF first (uses cached OCI blobs, avoids proxy blocking docker:// at runtime)
 # FreeSurfer 7.4.1 needs MINC mritotal for Talairach - shim it with talairach_avi (built-in)
-singularity pull app-freesurfer.sif docker://aunnikri642/app-freesurfer-mne-source-recon
-
 time singularity exec \
   -B `pwd`/license.txt:/opt/freesurfer/license.txt \
-  app-freesurfer.sif \
+  docker://aunnikri642/app-freesurfer-mne-source-recon \
   bash -c "mkdir -p /usr/local/mni/bin && printf '#!/bin/bash\ntalairach_avi \"\$@\"\n' > /usr/local/mni/bin/mritotal && chmod +x /usr/local/mni/bin/mritotal && export MINC_BIN_DIR=/usr/local/mni/bin && bash ./freesurfer.sh"
