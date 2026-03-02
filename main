@@ -9,10 +9,4 @@
 set -e
 set -x
 
-[ -z "$FREESURFER_LICENSE" ] && echo "Please set FREESURFER_LICENSE in resource environment" && exit 1
-echo $FREESURFER_LICENSE > license.txt
-
-time singularity exec -e \
-  -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
-  docker://aunnikri642/app-freesurfer-mne-source-recon \
-  bash ./freesurfer.sh
+singularity exec docker://hello-world /hello
