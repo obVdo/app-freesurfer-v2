@@ -15,4 +15,4 @@ echo $FREESURFER_LICENSE > license.txt
 time singularity exec -e \
   -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
   docker://aunnikri642/app-freesurfer-mne-source-recon \
-  bash -c "mkdir -p /usr/local/mni/bin && printf '#!/bin/bash\ntalairach_avi \"\$@\"\n' > /usr/local/mni/bin/mritotal && chmod +x /usr/local/mni/bin/mritotal && export MINC_BIN_DIR=/usr/local/mni/bin && bash ./freesurfer.sh"
+  bash ./freesurfer.sh
