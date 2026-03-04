@@ -12,4 +12,4 @@ set -x
 module load proxy
 
 
-singularity exec --disable-cache docker://hello-world /hello
+singularity exec --disable-cache  docker://brainlife/mne-freesurfer:7.3.2-1.2.1
