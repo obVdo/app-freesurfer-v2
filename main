@@ -9,12 +9,18 @@
 
 set -e
 set -x
-singularity --version
 
 # Load proxy module (if your cluster provides one)
 module load proxy
 
 export HTTP_PROXY=$http_proxy
 export HTTPS_PROXY=$https_proxy
+export ALL_PROXY=$http_proxy
+export SINGULARITY_HTTPS_PROXY=$https_proxy
+export SINGULARITY_HTTP_PROXY=$http_proxy
+
+singularity --version
+
+curl -sv --proxy "$http_proxy" https://auth.docker.io/token?service=registry.docker.io 2>&1 | tail -5
 
 singularity exec docker://hello-world /hello
