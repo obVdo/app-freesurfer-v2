@@ -1,15 +1,25 @@
 #!/bin/bash
 #PBS -l nodes=1:ppn=8,vmem=40gb,walltime=20:00:00
 #PBS -N bl.freesurfer
-#SBATCH --job-name=test-hello
+
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=40G
 #SBATCH --time=20:00:00
+
 set -e
 set -x
 
-# Load proxy module (if your cluster provides one)
 module load proxy
 
+if [ -n "$FREESURFER_LICENSE" ]; then
+    echo $FREESURFER_LICENSE > license.txt
+elif [ -n "$FS_LICENSE" ] && [ -f "$FS_LICENSE" ]; then
+    cp "$FS_LICENSE" license.txt
+else
+    echo "Please set FREESURFER_LICENSE or FS_LICENSE in resource environment" && exit 1
+fi
 
-singularity exec --disable-cache  docker://brainlife/mne-freesurfer:7.3.2-1.2.1
+time singularity exec --disable-cache \
+  -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
+  docker://brainlife/mne-freesurfer:7.3.2-1.2.1 \
+  bash ./freesurfer.sh
