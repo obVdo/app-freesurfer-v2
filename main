@@ -15,9 +15,7 @@ module load proxy
 
 export HTTP_PROXY=$http_proxy
 export HTTPS_PROXY=$https_proxy
-export ALL_PROXY=$http_proxy
-export SINGULARITY_HTTPS_PROXY=$https_proxy
-export SINGULARITY_HTTP_PROXY=$http_proxy
+
 
 singularity --version
 
