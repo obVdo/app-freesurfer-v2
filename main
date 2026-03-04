@@ -1,4 +1,6 @@
 #!/bin/bash
+#PBS -l nodes=1:ppn=8,vmem=40gb,walltime=20:00:00
+#PBS -N bl.freesurfer
 
 #SBATCH --job-name=test-hello
 #SBATCH --ntasks-per-node=8
@@ -14,6 +16,8 @@ module load proxy
 # Check that the variables are set
 echo $http_proxy
 echo $https_proxy
+
+curl -v --proxy "$http_proxy" https://registry-1.docker.io/v2/
 
 # Test Singularity Docker pull
 singularity exec docker://hello-world /hello
