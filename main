@@ -11,6 +11,9 @@ set -x
 # Load proxy module (if your cluster provides one)
 module load proxy
 
+# Check that the variables are set
+echo $http_proxy
+echo $https_proxy
 
 # Test Singularity Docker pull
 singularity exec docker://hello-world /hello
