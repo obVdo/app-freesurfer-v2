@@ -9,6 +9,7 @@
 
 set -e
 set -x
+singularity --version
 
 # Load proxy module (if your cluster provides one)
 module load proxy
