@@ -11,13 +11,6 @@ set -x
 # Load proxy module (if your cluster provides one)
 module load proxy
 
-# Explicitly set proxy environment variables
-export http_proxy=http://proxy-icm:3128/
-export https_proxy=http://proxy-icm:3128/
-
-# Confirm the proxy variables
-echo "HTTP_PROXY=$http_proxy"
-echo "HTTPS_PROXY=$https_proxy"
 
 # Test Singularity Docker pull
 singularity exec docker://hello-world /hello
