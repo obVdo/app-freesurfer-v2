@@ -10,37 +10,6 @@ set -x
 
 # Load proxy module (if your cluster provides one)
 module load proxy
-export HTTP_PROXY=$http_proxy
-export HTTPS_PROXY=$https_proxy
 
-# ── DIAGNOSTICS ───────────────────────────────────────────────
-echo "=== PROXY ENV ==="
-env | grep -i proxy || echo "NO PROXY VARS FOUND"
 
-echo "=== SINGULARITY VARS ==="
-env | grep -i singularity || echo "NO SINGULARITY VARS FOUND"
-
-echo "=== TMPDIR INFO ==="
-echo "TMPDIR=$TMPDIR"
-df -h "$TMPDIR"
-ls -la "$TMPDIR"
-
-echo "=== SINGULARITY BINARY ==="
-which singularity
-ls -la "$(which singularity)"
-
-echo "=== NETWORK TEST: proxy reachable? ==="
-curl -s -o /dev/null -w "%{http_code}" --proxy "$http_proxy" https://registry-1.docker.io/v2/
-echo " <- registry-1.docker.io (expect 401)"
-
-echo "=== NETWORK TEST: direct (no proxy)? ==="
-curl -s -o /dev/null -w "%{http_code}" --max-time 5 https://registry-1.docker.io/v2/ || true
-echo " <- direct (expect 000 or timeout if firewall blocks)"
-
-echo "=== SINGULARITY DEBUG PULL ==="
-singularity --debug exec docker://hello-world /hello 2>&1 | head -80
-# ── END DIAGNOSTICS ───────────────────────────────────────────
-
-singularity --version
-curl -sv --proxy "$http_proxy" https://auth.docker.io/token?service=registry.docker.io 2>&1 | tail -5
-singularity exec docker://hello-world /hello
+SINGULARITY_CACHEDIR=/tmp/singularity-cache singularity exec docker://hello-world /hello
