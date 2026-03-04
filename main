@@ -13,11 +13,7 @@ set -x
 # Load proxy module (if your cluster provides one)
 module load proxy
 
-# Check that the variables are set
-echo $http_proxy
-echo $https_proxy
+export HTTP_PROXY=$http_proxy
+export HTTPS_PROXY=$https_proxy
 
-curl -v --proxy "$http_proxy" https://registry-1.docker.io/v2/
-
-# Test Singularity Docker pull
 singularity exec docker://hello-world /hello
