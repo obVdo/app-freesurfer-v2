@@ -8,5 +8,5 @@
 
 set -e
 set -x
-
+module load proxy
 singularity exec docker://hello-world /hello
