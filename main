@@ -1,17 +1,23 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=8,vmem=40gb,walltime=20:00:00
-#PBS -N bl.freesurfer
 
+#SBATCH --job-name=test-hello
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=40G
 #SBATCH --time=20:00:00
 
 set -e
 set -x
+
+# Load proxy module (if your cluster provides one)
 module load proxy
 
-# Check that the variables are set
-echo $http_proxy
-echo $https_proxy
+# Explicitly set proxy environment variables
+export http_proxy=http://proxy-icm:3128/
+export https_proxy=http://proxy-icm:3128/
 
+# Confirm the proxy variables
+echo "HTTP_PROXY=$http_proxy"
+echo "HTTPS_PROXY=$https_proxy"
+
+# Test Singularity Docker pull
 singularity exec docker://hello-world /hello
