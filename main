@@ -7,8 +7,9 @@
 #SBATCH --time=00:10:00
 
 set -x
+set -e
 
 
-singularity exec --no-mount tmp docker://hello-world /hello
+singularity exec tmp docker://hello-world /hello
 
 echo '{"brainlife": []}' > product.json
