@@ -19,4 +19,4 @@ else
     echo "Please set FREESURFER_LICENSE or FS_LICENSE in resource environment" && exit 1
 fi
 
-singularity exec --no-mount tmp docker://brainlife/mne-freesurfer:7.3.2-1.2.1  bash ./freesurfer.sh
+singularity pull docker://brainlife/mne-freesurfer:7.3.2-1.2.1
