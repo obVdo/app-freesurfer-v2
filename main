@@ -19,7 +19,6 @@ else
 fi
 
 time singularity exec \
-  --disable-cache \
   --no-mount tmp \
   -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
   docker://brainlife/mne-freesurfer:7.3.2-1.2.1 \
