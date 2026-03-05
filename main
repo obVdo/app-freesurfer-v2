@@ -18,8 +18,4 @@ else
     echo "Please set FREESURFER_LICENSE or FS_LICENSE in resource environment" && exit 1
 fi
 
-time singularity exec \
-  --no-mount tmp \
-  -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
-  docker://brainlife/mne-freesurfer:7.3.2-1.2.1 \
-  bash ./freesurfer.sh
+singularity exec --no-mount tmp docker://hello-world /hello
