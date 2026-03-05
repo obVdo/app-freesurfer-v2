@@ -10,6 +10,6 @@ set -x
 set -e
 
 
-singularity exec tmp docker://hello-world /hello
+singularity exec docker://hello-world /hello
 
 echo '{"brainlife": []}' > product.json
