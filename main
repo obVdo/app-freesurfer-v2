@@ -6,7 +6,18 @@
 #SBATCH --mem=40G
 #SBATCH --time=20:00:00
 
-set -x
 set -e
+set -x
 
-singularity exec -B /network/iss/brainlife/users/brlife/workdir/69a5b82a6d000e9d7123001a/69a984976d000e9d718af354/license.txt:/usr/local/freesurfer/license.txt docker://brainlife/mne-freesurfer:7.3.2-1.2.1 bash ./freesurfer.sh
+if [ -n "$FREESURFER_LICENSE" ]; then
+    echo $FREESURFER_LICENSE > license.txt
+elif [ -n "$FS_LICENSE" ] && [ -f "$FS_LICENSE" ]; then
+    cp "$FS_LICENSE" license.txt
+else
+    echo "Please set FREESURFER_LICENSE or FS_LICENSE in resource environment" && exit 1
+fi
+
+singularity exec \
+  -B `pwd`/license.txt:/usr/local/freesurfer/license.txt \
+  docker://brainlife/mne-freesurfer:7.3.2-1.2.1 \
+  bash ./freesurfer.sh
