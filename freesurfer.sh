@@ -10,8 +10,7 @@ export OMP_NUM_THREADS=8
 export SUBJECTS_DIR=$(pwd)
 
 rm -rf output freesurfer
-recon-all -i $t1 -subject output -all -parallel -openmp $OMP_NUM_THREADS
-
+recon-all -i $t1 -subject output -all -watershed -parallel -openmp $OMP_NUM_THREADS
 mkdir -p freesurfer
 mv output freesurfer
 
