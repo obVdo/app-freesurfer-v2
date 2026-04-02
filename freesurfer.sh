@@ -11,7 +11,6 @@ export SUBJECTS_DIR=$(pwd)
 
 rm -rf output freesurfer
 recon-all -i $t1 -subject output -all -parallel -openmp $OMP_NUM_THREADS
-mkdir -p freesurfer
-mv output freesurfer
+
 
 echo '{"brainlife": []}' > product.json
