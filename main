@@ -19,5 +19,5 @@ fi
 
 singularity exec \
   -B `pwd`/license.txt:/opt/freesurfer/license.txt \
-  docker://brainlife/freesurfer:7.1.1 \
+  docker://brainlifemeeg/mne-freesurfer:1.12.1-7.4.1 \
   bash ./freesurfer.sh
